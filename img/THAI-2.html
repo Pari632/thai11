@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>12 พรหมชาติ</title>
+<style>
+body {
+  font-family: sans-serif;
+}
+.container {
+  width: 300px;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+input[type="radio"] {
+  margin-right: 10px;
+}
+input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #45a049;
+}
+.reset {
+  background-color: #f44336; /* กำหนดสีพื้นหลัง */
+}
+.reset:hover {
+  background-color: #da190b; /* เปลี่ยนสีพื้นหลังเมื่อนำเมาส์ไปวาง */
+}
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
+<body>
+
+<div class="container">
+  <h2>12 พรหมชาติ</h2>
+  <label for="age">อายุ:</label>
+  <input type="number" id="age" name="age"><br><br>
+
+  <label>เพศ:</label>
+  <input type="radio" name="gender" value="male" checked> ชาย
+  <input type="radio" name="gender" value="female"> หญิง<br><br>
+
+  <button type="button" onClick="showResult()">ทำนาย</button>
+  <button type="button" onClick="clearData()">ยกเลิก</button>
+  <div id="result"></div>
+</div>
+
+
+
+<script>
+function count12Phrommachat(age, gender) {
+  const phrommachat = [
+    ">>>ชะตาตกที่ เจดีย์<<< ปีนั้นชีวิตจะมีความสุขราบรื่น สุขทั้งกายสบายทั้งใจ จะได้สร้างบุญกุศลในศาสนา สิ่งที่ปรารถนาจะสมหวัง",
+	">>>ชะตาตกที่ ฉัตรเงิน<<< ปีนั้นผู้ใหญ่ให้ความอุปถัมภ์ค้ำจุน มีความเจริญก้าวหน้าในการงานอาชีพ โชคลาภเงินทองมากมี",
+	">>>ชะตาตกที่ คนคอขาด<<< ปีนั้นจะมีผู้นำพาความร้อนใจมาให้ ทำให้พบความยากลำบาก เป็นเหตุให้เสียทรัพย์สินเงินทอง",
+	">>>ชะตาตกที่ เรือนหลวง<<< ปีนั้นชีวิตมีความสุขสบาย การงานมีความเจริญก้าวหน้า ได้ทั้งโชคลาภ และเงินทองมีผู้อุปถัมภ์ค้ำจุน ผู้ที่คิดร้ายกับคุณจะแพ้ภัยไปเอง",
+	">>>ชะตาตกที่ ปราสาท<<< ปีนั้นคนโสดจะได้พบคู่ ชีวิตพบเจอแต่ความสุข กิจการหรือหน้าที่การงานที่ทำได้ผลเป็นที่พึงพอใจ จะได้สัตว์ 4 เท้า 2 เท้า หากทำมาค้าขายจะมากมายด้วยกำไร",
+	">>>ชะตาตกที่ ราหู<<< ปีนั้นคุณจะมีความร้อนใจ เดือดร้อนเพราะถ้อยคำที่ผู้อื่นทำให้คุณได้รับความลำบาก มีเหตุให้เสียทรัพย์สินเงินทอง มีการกระทบกระทั่งกับเพื่อนบ้าน ชีวิตพบเจอแต่ความวุ่นวาย และเจ็บไข้ได้ป่วย",
+    ">>>ชะตาตกที่ ฉัตรทอง<<< ปีนั้นเปี่ยมด้วยโชคลาภ มั่งคั่งเงินทอง รายล้อมด้วยลาภยศ และมิตรที่ดี ผู้ใหญ่คอยให้ความอุปถัมภ์ ชีวิตพบแต่ความสุขความเจริญ",
+    ">>>ชะตาตกที่ เทวดาขี่เต่า<<< ปีนั้นเงินทองไม่ติดขัด มีกินมีใช้ มีความสุขไม่ถึงกับทุกข์ สิ่งที่พึงระวังคือต้องเพิ่มความรอบคอบไม่ประมาทเพราะอาจนำพามาซึ่งความเดือดร้อน",
+    ">>>ชะตาตกที่ คนต้องขื่อคา<<< ปีนั้นดวงไม่ค่อยสู้ดี ญาติพี่น้องจะจำความเดือดเนื้อร้อนใจมาให้ คนรักตีตัวออกห่าง ระวังภยันตรายที่จะเกิดขึ้นแนะนำให้ทำบุญสะเดาะเคราะห์ เลี่ยงการเดินทางไกลเพราะอาจทำให้นำพามาซึ่งคดีความ",
+    ">>>ชะตาตกที่ พ่อหมอ<<< ปีนั้นจะมีผู้ใหญ่มาอุปถัมภ์ค้ำชู ช่วยเหลือให้คุณก้าวหน้าเติบโตในหน้าที่การงาน จะมีโชคมีลาภ ไม่มีภัยใดๆ ให้กังวล",
+    ">>>ชะตาตกที่ แม่มด<<< ปีนั้น หัวหน้า ผู้บังคับบัญชาจะทำให้คุณพบความสุขความเจริญในด้านหน้าที่การงาน วาจาของคุณจะเป็นที่ยอมรับจากบุคคลรอบข้าง ไปที่ไหนมีแต่คนรักใคร่เอ็นดู มีคนนำโชคลาภมาให้แบบพอหอมปากหอมคอ แต่อาจต้องเหนื่อยกายเหนื่อยใจบ้าง",
+    ">>>ชะตาตกที่ นาคราช<<< ปีนั้นต้องระวังโรคภัยไข้เจ็บ อาจถึงเลือดตกยางออก ระวังของมีคมและผู้ไม่หวังดีคอยปองร้าย หมั่นทำบุญไม่เบียดเบียนสิ่งมีชีวิตจะช่วยให้ทุกข์ภัยบรรเทาเบาบาง",
+  ];
+
+  let index = (gender === "male") ? age - 1 : 12 - (age % 12);
+  index = (index < 0) ? index + 12 : index;
+
+  return phrommachat[index % 12];
+}
+
+function showResult() {
+  let age = document.getElementById("age").value;
+  let gender = document.querySelector('input[name="gender"]:checked').value;
+  let resultDiv = document.getElementById("result");
+
+  if (age == "") {
+    alert("กรุณากรอกอายุ");
+    return false;
+  }
+
+  if (isNaN(age)) {
+    alert("กรุณากรอกอายุเป็นตัวเลข");
+    return false;
+  }
+
+  let result = count12Phrommachat(age, gender);
+  resultDiv.innerHTML = "คุณตกที่นั่ง " + result;
+}
+
+function clearData() {
+  document.getElementById("age").value = "";
+  document.getElementById("gender").value = "";
+  document.getElementById("result").innerHTML = "";
+  
+}
+
+</script>
+
+</body>
+</html>
